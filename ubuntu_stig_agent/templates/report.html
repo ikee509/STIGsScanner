@@ -1,1 +1,129 @@
- 
+<!DOCTYPE html>
+<html>
+<head>
+    <title>STIG Compliance Report</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 20px;
+            color: #333;
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        .summary-box {
+            background: #f8f9fa;
+            border-radius: 5px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+        
+        .compliance-score {
+            font-size: 24px;
+            font-weight: bold;
+            color: #2c3e50;
+        }
+        
+        .charts-container {
+            display: flex;
+            justify-content: space-between;
+            margin: 20px 0;
+        }
+        
+        .chart {
+            width: 48%;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        
+        th {
+            background-color: #f8f9fa;
+        }
+        
+        .severity-high {
+            color: #e74c3c;
+        }
+        
+        .severity-medium {
+            color: #f39c12;
+        }
+        
+        .severity-low {
+            color: #3498db;
+        }
+        
+        .status-failed {
+            color: #e74c3c;
+        }
+        
+        .status-passed {
+            color: #2ecc71;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>STIG Compliance Report</h1>
+        <p>Generated on {{ scan_info.report_generated }}</p>
+        <p>Host: {{ scan_info.hostname }}</p>
+    </div>
+
+    <div class="summary-box">
+        <h2>Compliance Summary</h2>
+        <p class="compliance-score">Overall Compliance: {{ "%.1f"|format(statistics.compliance_score) }}%</p>
+        <p>Total Checks: {{ statistics.total_checks }}</p>
+        <p>Passed: {{ statistics.passed }}</p>
+        <p>Failed: {{ statistics.failed }}</p>
+        <p>Errors: {{ statistics.errors }}</p>
+    </div>
+
+    <div class="charts-container">
+        <div class="chart">
+            <img src="{{ charts.compliance_chart }}" alt="Compliance Chart">
+        </div>
+        <div class="chart">
+            <img src="{{ charts.severity_chart }}" alt="Severity Chart">
+        </div>
+    </div>
+
+    <h2>Detailed Findings</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Rule ID</th>
+                <th>Title</th>
+                <th>Severity</th>
+                <th>Status</th>
+                <th>Description</th>
+                <th>Fix</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for finding in findings %}
+            <tr>
+                <td>{{ finding.rule_id }}</td>
+                <td>{{ finding.title }}</td>
+                <td class="severity-{{ finding.severity }}">{{ finding.severity }}</td>
+                <td class="status-{{ finding.status }}">{{ finding.status }}</td>
+                <td>{{ finding.description }}</td>
+                <td>{{ finding.fix }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html> 
