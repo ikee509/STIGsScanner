@@ -1,0 +1,29 @@
+{
+    "server": {
+        "host": "0.0.0.0",
+        "port": 8000,
+        "workers": 4,
+        "ssl": {
+            "enabled": true,
+            "cert_file": "/etc/stig-central/cert.pem",
+            "key_file": "/etc/stig-central/key.pem"
+        }
+    },
+    "database": {
+        "path": "/var/lib/stig-central/central.db"
+    },
+    "api_keys": {
+        "test-key-1": {
+            "name": "Test Agent 1",
+            "permissions": ["submit_results", "view_results"]
+        }
+    },
+    "logging": {
+        "level": "INFO",
+        "file": "/var/log/stig-central/server.log"
+    },
+    "reporting": {
+        "retention_days": 90,
+        "report_dir": "/var/lib/stig-central/reports"
+    }
+} 

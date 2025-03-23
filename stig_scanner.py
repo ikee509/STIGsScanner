@@ -51,6 +51,7 @@ class STIGScanner:
         except Exception as e:
             self.findings.append({
                 'severity': 'info',
+                'severity': 'info',
                 'rule_id': 'CHECK-ERROR',
                 'title': 'Password Policy Check Error',
                 'status': 'Error',

@@ -1,0 +1,36 @@
+version: '3.8'
+
+services:
+  stig-central:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "443:443"
+      - "8000:8000"
+    volumes:
+      - ./config:/etc/stig-central
+      - ./data:/var/lib/stig-central
+      - ./logs:/var/log/stig-central
+    environment:
+      - PYTHONUNBUFFERED=1
+    restart: unless-stopped
+    networks:
+      - stig-net
+
+  nginx:
+    image: nginx:alpine
+    ports:
+      - "80:80"
+    volumes:
+      - ./nginx/conf.d:/etc/nginx/conf.d
+      - ./nginx/ssl:/etc/nginx/ssl
+    depends_on:
+      - stig-central
+    restart: unless-stopped
+    networks:
+      - stig-net
+
+networks:
+  stig-net:
+    driver: bridge 

@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+
+{% block title %}Dashboard{% endblock %}
+
+{% block content %}
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+    <!-- Summary Cards -->
+    <div class="bg-white p-6 rounded-lg shadow">
+        <h3 class="text-lg font-semibold mb-2">Total Hosts</h3>
+        <p class="text-3xl font-bold text-blue-600" id="total-hosts">Loading...</p>
+    </div>
+    
+    <div class="bg-white p-6 rounded-lg shadow">
+        <h3 class="text-lg font-semibold mb-2">Compliance Score</h3>
+        <p class="text-3xl font-bold text-green-600" id="compliance-score">Loading...</p>
+    </div>
+    
+    <div class="bg-white p-6 rounded-lg shadow">
+        <h3 class="text-lg font-semibold mb-2">Critical Findings</h3>
+        <p class="text-3xl font-bold text-red-600" id="critical-findings">Loading...</p>
+    </div>
+</div>
+
+<div class="mt-8 grid grid-cols-1 lg:grid-cols-2 gap-6">
+    <!-- Recent Scans -->
+    <div class="bg-white p-6 rounded-lg shadow">
+        <h3 class="text-lg font-semibold mb-4">Recent Scans</h3>
+        <div class="overflow-x-auto">
+            <table class="min-w-full" id="recent-scans-table">
+                <thead>
+                    <tr>
+                        <th class="text-left">Host</th>
+                        <th class="text-left">Time</th>
+                        <th class="text-left">Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td colspan="3">Loading...</td></tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Compliance Trend -->
+    <div class="bg-white p-6 rounded-lg shadow">
+        <h3 class="text-lg font-semibold mb-4">Compliance Trend</h3>
+        <canvas id="compliance-chart"></canvas>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="{{ url_for('static', path='js/dashboard.js') }}"></script>
+{% endblock %} 
